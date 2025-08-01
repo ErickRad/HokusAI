@@ -255,7 +255,7 @@
 
 
 [✓] Average loss: 1.0582
- add .
+
 
 [✓] Average loss: 1.0300
 
