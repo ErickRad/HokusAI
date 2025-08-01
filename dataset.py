@@ -72,6 +72,7 @@ def loader(vocab, mode="train", batchSize=properties.batchSize, numWorkers=os.cp
         transform = transforms.Compose([
             transforms.RandomResizedCrop(224, scale=(0.8, 1.0)),
             transforms.RandomHorizontalFlip(),
+            transforms.RandomRotation(degrees=10),
             transforms.ColorJitter(brightness=0.1, contrast=0.1, saturation=0.1, hue=0.05),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406],
@@ -89,7 +90,7 @@ def loader(vocab, mode="train", batchSize=properties.batchSize, numWorkers=os.cp
 
     dataset = CustomDataset(
         image_dir=imageDir,
-        annotation_file=annotationFile,
+        annotationFile=annotationFile,
         vocab=vocab,
         transform=transform
     )

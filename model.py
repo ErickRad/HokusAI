@@ -1,16 +1,43 @@
+import properties
+import os
+import re
+import nltk
 import torch
 import math
 import torch.nn as nn
 import torch.nn.functional as F
+import torch.optim as optim
+from datetime import datetime
 from torch.amp import autocast, GradScaler
-from torch.optim.lr_scheduler import LambdaLR
 from tqdm import tqdm
 from plot import LossPlotter
-from train import log
 from colorama import init, Fore
-import properties
+
 
 init(autoreset=True)
+
+def log(message, end="\n"):
+        global logPath
+
+        if logPath is None:
+            timestamp = datetime.now().strftime("%d.%m-%Hh%Mm")
+            baseDir = properties.LOGS_PATH
+            os.makedirs(baseDir, exist_ok=True)
+
+            path = os.path.join(baseDir, f"{timestamp}.txt")
+            i = 1
+            while os.path.exists(path):
+                path = os.path.join(baseDir, f"{timestamp}.{i}.txt")
+                i += 1
+
+            logPath = path
+
+        cleanMessage = message.replace(Fore.GREEN, "").replace(Fore.RED, "").replace(Fore.RESET, "")
+        
+        print(message, end=end)
+
+        with open(logPath, "a", encoding="utf-8") as logFile:
+            logFile.write(cleanMessage + end)
 
 class PositionalEncoding(nn.Module):
     def __init__(self, dimModel, maxLen=5000):
@@ -29,7 +56,7 @@ class PositionalEncoding(nn.Module):
         return x + self.pe[:, :x.size(1)]
 
 class FeedForward(nn.Module):
-    def __init__(self, dimModel, dimFF, dropout=0.1):
+    def __init__(self, dimModel, dimFF, dropout):
         super().__init__()
         self.linear1 = nn.Linear(dimModel, dimFF)
         self.dropout = nn.Dropout(dropout)
@@ -39,7 +66,7 @@ class FeedForward(nn.Module):
         return self.linear2(self.dropout(F.relu(self.linear1(x))))
 
 class EncoderLayer(nn.Module):
-    def __init__(self, dimModel, heads, dimFF, dropout=0.1):
+    def __init__(self, dimModel, heads, dimFF, dropout):
         super().__init__()
         self.attn = nn.MultiheadAttention(dimModel, heads, dropout=dropout, batch_first=True)
         self.ff = FeedForward(dimModel, dimFF, dropout)
@@ -55,7 +82,7 @@ class EncoderLayer(nn.Module):
         return x
 
 class DecoderLayer(nn.Module):
-    def __init__(self, dimModel, heads, dimFF, dropout=0.1):
+    def __init__(self, dimModel, heads, dimFF, dropout):
         super().__init__()
         self.selfAttn = nn.MultiheadAttention(dimModel, heads, dropout=dropout, batch_first=True)
         self.crossAttn = nn.MultiheadAttention(dimModel, heads, dropout=dropout, batch_first=True)
@@ -76,12 +103,19 @@ class DecoderLayer(nn.Module):
 
         return tgt
 
-class VisionTransformerEncoder(nn.Module):
-    def __init__(self, embedSize, imageSize=224, channels=3, numLayers=4, heads=8, dimFF=3072, dropout=0.1):
+class VisionTransformer(nn.Module):
+    def __init__(self, embedSize, 
+                 imageSize=224, 
+                 channels=3, 
+                 numLayers=properties.numLayers, 
+                 heads=properties.heads, 
+                 dimFF=properties.dimFF, 
+                 dropout=properties.dropout):
+        
         super().__init__()
         self.patchSize = properties.patchSize
         self.numPatches = (imageSize // self.patchSize) ** 2
-
+    
         patchDim = channels * self.patchSize * self.patchSize
 
         self.linear = nn.Linear(patchDim, embedSize)
@@ -105,7 +139,13 @@ class VisionTransformerEncoder(nn.Module):
         return tokens
 
 class TransformerEncoder(nn.Module):
-    def __init__(self, inputDim, dimModel, numLayers=4, heads=8, dimFF=3072, dropout=0.1, maxLen=5000):
+    def __init__(self, inputDim, dimModel, 
+                 numLayers=properties.numLayers, 
+                 heads=properties.heads, 
+                 dimFF=properties.dimFF, 
+                 dropout=properties.dropout, 
+                 maxLen=5000):
+        
         super().__init__()
         self.posEncoder = PositionalEncoding(dimModel, maxLen)
         self.layers = nn.ModuleList([
@@ -121,7 +161,13 @@ class TransformerEncoder(nn.Module):
         return x
 
 class TransformerDecoder(nn.Module):
-    def __init__(self, tgtVocabSize, dimModel, numLayers=4, heads=8, dimFF=3072, dropout=0.1, maxLen=5000):
+    def __init__(self, tgtVocabSize, dimModel, 
+                 numLayers=properties.numLayers, 
+                 heads=properties.heads, 
+                 dimFF=properties.dimFF, 
+                 dropout=properties.dropout, 
+                 maxLen=5000):
+        
         super().__init__()
         self.embed = nn.Embedding(tgtVocabSize, dimModel)
         self.posEncoder = PositionalEncoding(dimModel, maxLen)
@@ -149,12 +195,17 @@ class TransformerDecoder(nn.Module):
 
 class NeuralNetwork:
     def __init__(self, embedSize, hiddenSize, vocabSize, device,
-                 encoderLayers=4, decoderLayers=4, heads=8, dimFF=3072, dropout=0.1):
+                 encoderLayers=properties.numLayers, 
+                 decoderLayers=properties.numLayers, 
+                 heads=properties.heads, 
+                 dimFF=properties.dimFF, 
+                 dropout=properties.dropout):
+        
         self.device = device
         self.embedSize = embedSize
         self.vocabSize = vocabSize
 
-        self.visionTransformer = VisionTransformerEncoder(embedSize).to(device)
+        self.visionTransformer = VisionTransformer(embedSize).to(device)
         self.linearProj = nn.Identity()
 
         self.transformerEncoder = TransformerEncoder(
@@ -179,6 +230,36 @@ class NeuralNetwork:
         return torch.triu(torch.ones(sz, sz) * float('-inf'), diagonal=1).to(self.device)
 
     @staticmethod
+    def customAdamOptimizer(model):
+        params = list(model.visionTransformer.parameters()) + \
+                 list(model.transformerEncoder.parameters()) + \
+                 list(model.transformerDecoder.parameters()) + \
+                 list(model.linearProj.parameters())
+
+        return optim.Adam(params, lr=properties.learningRate)
+        
+    @staticmethod
+    def customBLEULossFunction(outputs, targets, vocab, ignoreIndex):
+        criterion = nn.CrossEntropyLoss(ignore_index=ignoreIndex)
+        ceLoss = criterion(outputs, targets)
+
+        predIndices = torch.argmax(outputs, dim=1)
+
+        predSentence = [vocab.itos[idx.item()] for idx in predIndices if idx.item() != ignoreIndex]
+        targetSentence = [vocab.itos[idx.item()] for idx in targets if idx.item() != ignoreIndex]
+
+        try:
+            bleuScore = nltk.translate.bleu_score.sentence_bleu(
+                [targetSentence],
+                predSentence,
+                weights=(0.25, 0.25, 0.25, 0.25)
+            )
+        except:
+            bleuScore = 0.0
+
+        return ceLoss + properties.alpha * (1.0 - bleuScore)
+
+    @staticmethod
     def cosineWithDelayScheduler(optimizer, warmup_steps, plateau_steps, total_steps, eta_min):
         def lrLambda(step):
             if step < warmup_steps:
@@ -193,25 +274,30 @@ class NeuralNetwork:
 
                 return cosine * (1 - eta_min / properties.learningRate) + eta_min / properties.learningRate
             
-        return LambdaLR(optimizer, lrLambda)
+        return optim.lr_scheduler.LambdaLR(optimizer, lrLambda)
 
-    def train(self, trainLoader, criterion, optimizer, numEpochs, vocab, sampleImage=None):
+    def train(self, trainLoader, numEpochs, vocab, sampleImage=None):
         plotter = LossPlotter()
 
         self.visionTransformer.train()
         self.transformerEncoder.train()
         self.transformerDecoder.train()
 
+        totalSteps = len(trainLoader) * numEpochs
+
+        optimizer = NeuralNetwork.customAdamOptimizer(self)
+
         scheduler = NeuralNetwork.cosineWithDelayScheduler(
             optimizer,
-            warmup_steps=properties.warmupSteps,
-            plateau_steps=properties.plateauSteps,
-            total_steps=len(trainLoader) * numEpochs,
+            warmup_steps=int(totalSteps * properties.warmupRatio),
+            plateau_steps=int(totalSteps * properties.plateauRatio),
+            total_steps=totalSteps,
             eta_min=properties.etaMin
         )
 
         for epoch in range(numEpochs):
             totalLoss = 0
+            recent_losses = []
 
             loop = tqdm(trainLoader, desc=f"Epoch {epoch+1}/{numEpochs}",
                         bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt} [ {elapsed}/{remaining} ,{rate_fmt} {postfix} ]")
@@ -232,33 +318,53 @@ class NeuralNetwork:
                     tgtMask = self.generateSquareSubsequentMask(tgtInput.size(1))
                     outputs = self.transformerDecoder(tgtInput, memory, tgtMask=tgtMask)
 
-                    outputs = outputs.reshape(-1, outputs.size(-1))
-                    tgtOutput = tgtOutput.contiguous().view(-1)
+                    outputsFlat = outputs.reshape(-1, outputs.size(-1))
+                    tgtOutputFlat = tgtOutput.contiguous().view(-1)
 
-                    loss = criterion(outputs, tgtOutput)
+                    loss = NeuralNetwork.customBLEULossFunction(
+                        outputsFlat, 
+                        tgtOutputFlat, 
+                        vocab, 
+                        ignoreIndex=vocab.stoi["<PAD>"]
+                    )
 
                 self.scaler.scale(loss).backward()
                 self.scaler.step(optimizer)
                 self.scaler.update()
 
-                totalLoss += loss.item()
-                loop.set_postfix(loss=f"{loss.item():.4f}")
-
                 if scheduler:
                     scheduler.step()
 
-            plotter.add(epoch, loss.item())
-            plotter.plot()
+                lossValue = loss.item()
+                totalLoss += lossValue
+                loop.set_postfix(loss=f"{lossValue:.4f}")
+
+                recent_losses.append(lossValue)
+
+                if loop.n % 100 == 0:
+                    avgRecentLoss = sum(recent_losses) / len(recent_losses)
+                    currentStep = epoch + (loop.n / loop.total)
+
+                    plotter.add(currentStep, avgRecentLoss)
+                    plotter.plot()
+
+                    recent_losses.clear()
 
             avgLoss = totalLoss / len(trainLoader)
             log(f"\n[{Fore.GREEN}✓{Fore.RESET}] Average loss: {avgLoss:.4f}\n")
-            
+
             if sampleImage is not None:
                 exampleCaption = self.generateCaption(sampleImage, vocab)
                 log(f"Sample caption: {exampleCaption}\n")
+
     
     @torch.no_grad()
-    def generateCaption(self, image, vocab, maxLength=properties.maxLength, topK=properties.topK, temperature=properties.temperature):
+    def generateCaption(self, image, vocab, useFallback, 
+                        maxLength=properties.maxLength, 
+                        topK=properties.topK, 
+                        temperature=properties.temperature, 
+                        topP=properties.topP):
+        
         self.visionTransformer.eval()
         self.transformerEncoder.eval()
         self.transformerDecoder.eval()
@@ -266,7 +372,7 @@ class NeuralNetwork:
         if image.dim() == 3:
             image = image.unsqueeze(0)
         elif image.dim() != 4:
-            raise ValueError(f"Image tensor must be 3D or 4D, got {image.dim()}D")
+            raise ValueError(f"Image tensor must be 4D, got {image.dim()}D")
 
         image = image.to(self.device)
 
@@ -283,12 +389,27 @@ class NeuralNetwork:
 
             with autocast(device_type=self.device.type):
                 output = self.transformerDecoder(inputIds, memory, tgtMask=tgtMask)
-                output = output[:, -1, :]
-                output = output / temperature
-                probs = torch.softmax(output, dim=-1)
-                topk_vals, topk_indices = torch.topk(probs, k=topK)
-                sampled = torch.multinomial(topk_vals.squeeze(0), 1)
-                predictedId = topk_indices[0, sampled.item()].item()
+                output = output[:, -1, :] / temperature
+                probs = torch.softmax(output, dim=-1).squeeze(0)
+
+                if useFallback:
+                    sortedProbs, sortedIndices = torch.sort(probs, descending=True)
+                    cumulativeProbs = torch.cumsum(sortedProbs, dim=0)
+
+                    mask = cumulativeProbs <= topP
+                    mask[0] = True
+
+                    filteredProbs = sortedProbs[mask]
+                    filteredIndices = sortedIndices[mask]
+
+                    filteredProbs /= filteredProbs.sum()
+                    sampledIdx = torch.multinomial(filteredProbs, 1)
+                    predictedId = filteredIndices[sampledIdx.item()].item()
+
+                else:
+                    topkVals, topkIndices = torch.topk(probs, k=topK)
+                    sampled = torch.multinomial(topkVals, 1)
+                    predictedId = topkIndices[sampled.item()].item()
 
             if predictedId == vocab.stoi.get("<EOS>", None):
                 break
@@ -300,7 +421,15 @@ class NeuralNetwork:
 
         captionWords = [vocab.itos[idx] for idx in captionIndices if idx in vocab.itos and vocab.itos[idx] != "<UNK>"]
 
-        return " ".join(captionWords)
+        if captionWords:
+            captionWords[0] = captionWords[0].capitalize()
+
+        caption = " ".join(captionWords)
+        caption = re.sub(r"\bit\s+'s\b", "its", re.sub(r'\s+([.,!?;:])', r'\1', caption))
+        if caption and caption[-1] not in '.!?':
+            caption += '.'
+
+        return caption
     
     def save(self, encoderPath, decoderPath):
         torch.save(self.visionTransformer.state_dict(), encoderPath)
@@ -312,9 +441,14 @@ class NeuralNetwork:
         }, decoderPath)
 
     def load(self, encoderPath, decoderPath):
-        self.visionTransformer.load_state_dict(torch.load(encoderPath, map_location=self.device))
-        checkpoint = torch.load(decoderPath, map_location=self.device)
-        
-        self.transformerEncoder.load_state_dict(checkpoint['transformerEncoder'])
-        self.transformerDecoder.load_state_dict(checkpoint['transformerDecoder'])
-        self.linearProj.load_state_dict(checkpoint['linearProj'])
+        self.visionTransformer.load_state_dict(
+            torch.load(encoderPath, map_location=self.device, weights_only=True)
+        )
+
+        transformerEncoderState = torch.load(decoderPath, map_location=self.device, weights_only=True)['transformerEncoder']
+        transformerDecoderState = torch.load(decoderPath, map_location=self.device, weights_only=True)['transformerDecoder']
+        linearProjState = torch.load(decoderPath, map_location=self.device, weights_only=True)['linearProj']
+
+        self.transformerEncoder.load_state_dict(transformerEncoderState)
+        self.transformerDecoder.load_state_dict(transformerDecoderState)
+        self.linearProj.load_state_dict(linearProjState)

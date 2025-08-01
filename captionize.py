@@ -31,6 +31,8 @@ def preprocessImage(image_path):
 def main():
     parser = argparse.ArgumentParser(description="Image Captioning")
     parser.add_argument("--image-path", type=str, help="Path to input image")
+    parser.add_argument("--use-fallback", action="store_true", help="Use top K fallback to gerante captions instead of top P nucleus sampling")
+    parser.add_argument("--num-captions", type=int, help="number of captions to generate", default=1)
     args = parser.parse_args()
 
     vocab = loadVocab()
@@ -40,9 +42,15 @@ def main():
     model.load("checkpoints/encoder.pth", "checkpoints/decoder.pth")
 
     image = preprocessImage(args.image_path)
-    caption = model.generateCaption(image, vocab)
-    
-    print("Generated Caption:", caption)
+    image = image.unsqueeze(0).to(device)
+
+    print("Captions:\n")
+
+    for i in range(args.num_captions):
+        caption = model.generateCaption(image, vocab, args.use_fallback)
+        print(f"{i+1}.{caption}")
+
+    print("\n")
 
 if __name__ == "__main__":
     main()

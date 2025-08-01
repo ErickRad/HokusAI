@@ -10,21 +10,19 @@ class LossPlotter:
     def add(self, epoch, trainLoss, valLoss=None):
         self.epochs.append(epoch)
         self.trainLosses.append(trainLoss)
-
-    def plot(self, valLoss=None):
         if valLoss is not None:
             self.valLosses.append(valLoss)
 
+    def plot(self):
         plt.figure(figsize=(10, 5))
-
         plt.plot(self.epochs, self.trainLosses, label='Train Loss', color='blue')
-        if valLoss is not None:
-            plt.plot(self.epochs, self.valLosses, label='Val Loss', color='orange')
+        
+        if self.valLosses:
+            plt.plot(self.epochs[:len(self.valLosses)], self.valLosses, label='Val Loss', color='orange')
 
         plt.xlabel('Epoch')
         plt.ylabel('Loss')
         plt.legend()
-
         plt.grid(True)
-        plt.savefig('logs/lastLoss.png')
+        plt.savefig('logs/loss.png')
         plt.close()
