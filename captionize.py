@@ -39,7 +39,12 @@ def main():
     vocab_size = len(vocab)
 
     model = NeuralNetwork(properties.embedSize, properties.hiddenSize, vocab_size, device)
-    model.load("checkpoints/encoder.pth", "checkpoints/decoder.pth")
+    model.load(
+        visionTransformerPath="checkpoints/visionTransformer.pth",
+        transformerEncoderPath="checkpoints/transformerEncoder.pth",
+        transformerDecoderPath="checkpoints/transformerDecoder.pth",
+        linearProjPath="checkpoints/linearProj.pth"
+    )
 
     image = preprocessImage(args.image_path)
     image = image.unsqueeze(0).to(device)

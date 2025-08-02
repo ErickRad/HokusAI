@@ -15,7 +15,7 @@ topP                  = 0.9
 temperature           = 1.2
 
 patchSize             = 16
-batchSize             = 64
+batchSize             = 32
 embedSize             = 512
 hiddenSize            = 512
 dimFF                 = 3072

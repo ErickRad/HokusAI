@@ -12,6 +12,7 @@ from torch.amp import autocast, GradScaler
 from tqdm import tqdm
 from plot import LossPlotter
 from colorama import init, Fore
+from nltk.translate.bleu_score import SmoothingFunction
 
 
 init(autoreset=True)
@@ -248,11 +249,14 @@ class NeuralNetwork:
         predSentence = [vocab.itos[idx.item()] for idx in predIndices if idx.item() != ignoreIndex]
         targetSentence = [vocab.itos[idx.item()] for idx in targets if idx.item() != ignoreIndex]
 
+        smooth = SmoothingFunction().method1
+
         try:
             bleuScore = nltk.translate.bleu_score.sentence_bleu(
                 [targetSentence],
                 predSentence,
-                weights=(0.25, 0.25, 0.25, 0.25)
+                weights=(0.25, 0.25, 0.25, 0.25),
+                smoothing_function=smooth
             )
         except:
             bleuScore = 0.0
@@ -431,24 +435,46 @@ class NeuralNetwork:
 
         return caption
     
-    def save(self, encoderPath, decoderPath):
-        torch.save(self.visionTransformer.state_dict(), encoderPath)
-
-        torch.save({
-            'transformerEncoder': self.transformerEncoder.state_dict(),
-            'transformerDecoder': self.transformerDecoder.state_dict(),
-            'linearProj': self.linearProj.state_dict(),
-        }, decoderPath)
-
-    def load(self, encoderPath, decoderPath):
-        self.visionTransformer.load_state_dict(
-            torch.load(encoderPath, map_location=self.device, weights_only=True)
+    def save(self, visionTransformerPath, transformerEncoderPath, transformerDecoderPath, linearProjPath):
+        torch.save(
+            self.visionTransformer.state_dict(), 
+            visionTransformerPath
+        )
+        torch.save(
+            self.transformerEncoder.state_dict(), 
+            transformerEncoderPath
+        )
+        torch.save(
+            self.transformerDecoder.state_dict(), 
+            transformerDecoderPath
+        )
+        torch.save(
+            self.linearProj.state_dict(), 
+            linearProjPath
         )
 
-        transformerEncoderState = torch.load(decoderPath, map_location=self.device, weights_only=True)['transformerEncoder']
-        transformerDecoderState = torch.load(decoderPath, map_location=self.device, weights_only=True)['transformerDecoder']
-        linearProjState = torch.load(decoderPath, map_location=self.device, weights_only=True)['linearProj']
-
-        self.transformerEncoder.load_state_dict(transformerEncoderState)
-        self.transformerDecoder.load_state_dict(transformerDecoderState)
-        self.linearProj.load_state_dict(linearProjState)
+    def load(self, visionTransformerPath, transformerEncoderPath, transformerDecoderPath, linearProjPath):
+        self.visionTransformer.load_state_dict(
+            torch.load(
+                visionTransformerPath, 
+                map_location=self.device
+            )
+        )
+        self.transformerEncoder.load_state_dict(
+            torch.load(
+                transformerEncoderPath, 
+                map_location=self.device
+            )
+        )
+        self.transformerDecoder.load_state_dict(
+            torch.load(
+                transformerDecoderPath, 
+                map_location=self.device
+            )
+        )
+        self.linearProj.load_state_dict(
+            torch.load(
+                linearProjPath, 
+                map_location=self.device
+            )
+        )

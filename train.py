@@ -47,7 +47,12 @@ def main():
     print(f"[{Fore.GREEN}✓{Fore.RESET}] Starting training... done.")
 
     os.makedirs("checkpoints", exist_ok=True)
-    model.save("checkpoints/encoder.pth", "checkpoints/decoder.pth")
+    model.save(
+        visionTransformerPath="checkpoints/visionTransformer.pth",
+        transformerEncoderPath="checkpoints/transformerEncoder.pth",
+        transformerDecoderPath="checkpoints/transformerDecoder.pth",
+        linearProjPath="checkpoints/linearProj.pth"
+    )
 
 if __name__ == "__main__":
     main()
