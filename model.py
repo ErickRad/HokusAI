@@ -316,7 +316,7 @@ class NeuralNetwork:
 
                 recent_losses.append(lossValue)
 
-                if loop.n % 100 == 0:
+                if loop.n % 1000 == 0:
                     avgRecentLoss = sum(recent_losses) / len(recent_losses)
                     currentStep = epoch + (loop.n / loop.total)
 

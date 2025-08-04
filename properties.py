@@ -2,9 +2,8 @@ epochs                = 150
 learningRate          = 2e-4
 etaMin                = 1e-6
 dropout               = 0.3
-alpha                 = 0.9
-warmupRatio           = 0.10 # 22_193
-plateauRatio          = 0.45 # 720_066
+warmupRatio           = 0.10
+plateauRatio          = 0.45
 
 threshold             = 1
 maxLength             = 30
@@ -20,7 +19,7 @@ hiddenSize            = 512
 
 maxLen                = 5000
 dimFF                 = 3072
-numLayers             = 6
+numLayers             = 8
 heads                 = 8
 
 IMAGE_DIR_TRAIN       = "data/train2017"
