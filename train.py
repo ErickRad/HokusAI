@@ -9,7 +9,6 @@ from model import *
 from vocabBuilder import Vocabulary, loadCaptions
 
 init(autoreset=True)
-logPath = None
 device = None
 
 def main():
