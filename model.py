@@ -1,7 +1,6 @@
 import properties
 import os
 import re
-import nltk
 import torch
 import math
 import torch.nn as nn
@@ -12,13 +11,13 @@ from torch.amp import autocast, GradScaler
 from tqdm import tqdm
 from plot import LossPlotter
 from colorama import init, Fore
-from nltk.translate.bleu_score import SmoothingFunction
-
 
 init(autoreset=True)
+logPath = None
 
 def log(message, end="\n"):
         global logPath
+        cleanMessage = ""
 
         if logPath is None:
             timestamp = datetime.now().strftime("%d.%m-%Hh%Mm")
@@ -195,7 +194,7 @@ class TransformerDecoder(nn.Module):
         return self.fcOut(tgtEmb)
 
 class NeuralNetwork:
-    def __init__(self, embedSize, hiddenSize, vocabSize, device,
+    def __init__(self, vocabSize, device,
                  encoderLayers=properties.numLayers, 
                  decoderLayers=properties.numLayers, 
                  heads=properties.heads, 
@@ -203,15 +202,14 @@ class NeuralNetwork:
                  dropout=properties.dropout):
         
         self.device = device
-        self.embedSize = embedSize
         self.vocabSize = vocabSize
 
-        self.visionTransformer = VisionTransformer(embedSize).to(device)
+        self.visionTransformer = VisionTransformer(properties.embedSize).to(device)
         self.linearProj = nn.Identity()
 
         self.transformerEncoder = TransformerEncoder(
-            embedSize, 
-            embedSize, 
+            properties.embedSize, 
+            properties.embedSize, 
             encoderLayers, 
             heads, 
             dimFF, 
@@ -219,7 +217,7 @@ class NeuralNetwork:
         
         self.transformerDecoder = TransformerDecoder(
             vocabSize, 
-            embedSize, 
+            properties.embedSize, 
             decoderLayers, 
             heads, 
             dimFF, 
@@ -238,30 +236,6 @@ class NeuralNetwork:
                  list(model.linearProj.parameters())
 
         return optim.Adam(params, lr=properties.learningRate)
-        
-    @staticmethod
-    def customBLEULossFunction(outputs, targets, vocab, ignoreIndex):
-        criterion = nn.CrossEntropyLoss(ignore_index=ignoreIndex)
-        ceLoss = criterion(outputs, targets)
-
-        predIndices = torch.argmax(outputs, dim=1)
-
-        predSentence = [vocab.itos[idx.item()] for idx in predIndices if idx.item() != ignoreIndex]
-        targetSentence = [vocab.itos[idx.item()] for idx in targets if idx.item() != ignoreIndex]
-
-        smooth = SmoothingFunction().method1
-
-        try:
-            bleuScore = nltk.translate.bleu_score.sentence_bleu(
-                [targetSentence],
-                predSentence,
-                weights=(0.25, 0.25, 0.25, 0.25),
-                smoothing_function=smooth
-            )
-        except:
-            bleuScore = 0.0
-
-        return ceLoss + properties.alpha * (1.0 - bleuScore)
 
     @staticmethod
     def cosineWithDelayScheduler(optimizer, warmup_steps, plateau_steps, total_steps, eta_min):
@@ -325,12 +299,9 @@ class NeuralNetwork:
                     outputsFlat = outputs.reshape(-1, outputs.size(-1))
                     tgtOutputFlat = tgtOutput.contiguous().view(-1)
 
-                    loss = NeuralNetwork.customBLEULossFunction(
-                        outputsFlat, 
-                        tgtOutputFlat, 
-                        vocab, 
-                        ignoreIndex=vocab.stoi["<PAD>"]
-                    )
+                    criterion = nn.CrossEntropyLoss(ignore_index=vocab.stoi["<PAD>"])
+                
+                    loss = criterion(outputsFlat, tgtOutputFlat)
 
                 self.scaler.scale(loss).backward()
                 self.scaler.step(optimizer)

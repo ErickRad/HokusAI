@@ -42,7 +42,7 @@ def main():
         print(f"[{Fore.RED}X{Fore.RESET}] Looking for CUDA... not available. Resuming on CPU 💀😨.")
 
     print(f"[+] Starting training...\n")
-    model = NeuralNetwork(properties.embedSize, properties.hiddenSize, len(vocab), device)
+    model = NeuralNetwork(len(vocab), device)
     model.train(loader(vocab), properties.epochs, vocab)
     print(f"[{Fore.GREEN}✓{Fore.RESET}] Starting training... done.")
 

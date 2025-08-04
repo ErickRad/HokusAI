@@ -1,15 +1,14 @@
-epochs                = 120 # 100
+epochs                = 150
 learningRate          = 2e-4
 etaMin                = 1e-6
-alpha                 = 0.5
 dropout               = 0.3
+alpha                 = 0.9
 warmupRatio           = 0.10 # 22_193
 plateauRatio          = 0.45 # 720_066
 
 threshold             = 1
 maxLength             = 30
 maxSamples            = None
-
 topK                  = 30
 topP                  = 0.9
 temperature           = 1.2
@@ -18,8 +17,10 @@ patchSize             = 16
 batchSize             = 32
 embedSize             = 512
 hiddenSize            = 512
+
+maxLen                = 5000
 dimFF                 = 3072
-numLayers             = 8
+numLayers             = 6
 heads                 = 8
 
 IMAGE_DIR_TRAIN       = "data/train2017"
