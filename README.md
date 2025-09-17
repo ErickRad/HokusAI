@@ -43,7 +43,7 @@
 
 ### Why Sentence?
 
-- 🦾 **Powerful Architecture**: Combines Transformers to Vision, Encoder and Decoder for best results
+- 🦾 **Powerful Architecture**: Combines Vision, Encoder and Decoder Tranformers for best results
 - 🎯 **End-to-End Workflow**: Supports training, inference, and model management with configurable hyperparameters.
 - 📊 **Progress Visualization**: Tracks training metrics with integrated plotting tools for performance monitoring.
 - 🛠️ **Custom Data Pipelines**: Facilitates preprocessing, tokenization, and batching tailored for image captioning tasks, allowing you to create your own vocabulary.
