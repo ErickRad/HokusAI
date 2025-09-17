@@ -1,0 +1,726 @@
+
+[✓] Average loss: 8.2312
+
+[✓] Average loss: 5.7563
+
+[✓] Average loss: 4.5088
+
+[✓] Average loss: 4.0658
+
+[✓] Average loss: 3.8013
+
+[✓] Average loss: 3.5977
+
+[✓] Average loss: 3.4358
+
+[✓] Average loss: 3.3029
+
+[✓] Average loss: 3.1930
+
+[✓] Average loss: 3.0999
+
+[✓] Average loss: 3.0210
+
+[✓] Average loss: 2.9524
+
+[✓] Average loss: 2.8921
+
+[✓] Average loss: 2.8380
+
+[✓] Average loss: 2.7892
+
+[✓] Average loss: 2.7448
+
+[✓] Average loss: 2.7041
+
+[✓] Average loss: 2.6666
+
+[✓] Average loss: 2.6314
+
+[✓] Average loss: 2.5982
+
+[✓] Average loss: 2.5679
+
+[✓] Average loss: 2.5384
+
+[✓] Average loss: 2.5109
+
+[✓] Average loss: 2.4843
+
+[✓] Average loss: 2.4586
+
+[✓] Average loss: 2.4341
+
+[✓] Average loss: 2.4097
+
+[✓] Average loss: 2.3867
+
+[✓] Average loss: 2.3655
+
+[✓] Average loss: 2.3448
+
+[✓] Average loss: 2.3251
+
+[✓] Average loss: 2.3062
+
+[✓] Average loss: 2.2878
+
+[✓] Average loss: 2.2701
+
+[✓] Average loss: 2.2531
+
+[✓] Average loss: 2.2366
+
+[✓] Average loss: 2.2203
+
+[✓] Average loss: 2.2043
+
+[✓] Average loss: 2.1884
+
+[✓] Average loss: 2.1735
+
+[✓] Average loss: 2.1583
+
+[✓] Average loss: 2.1433
+
+[✓] Average loss: 2.1287
+
+[✓] Average loss: 2.1148
+
+[✓] Average loss: 2.1007
+
+[✓] Average loss: 2.0870
+
+[✓] Average loss: 2.0734
+
+[✓] Average loss: 2.0600
+
+[✓] Average loss: 2.0471
+
+[✓] Average loss: 2.0338
+
+[✓] Average loss: 2.0212
+
+[✓] Average loss: 2.0088
+
+[✓] Average loss: 1.9964
+
+[✓] Average loss: 1.9839
+
+[✓] Average loss: 1.9727
+
+[✓] Average loss: 1.9606
+
+[✓] Average loss: 1.9493
+
+[✓] Average loss: 1.9373
+
+[✓] Average loss: 1.9265
+
+[✓] Average loss: 1.9158
+
+[✓] Average loss: 1.9047
+
+[✓] Average loss: 1.8942
+
+[✓] Average loss: 1.8835
+
+[✓] Average loss: 1.8729
+
+[✓] Average loss: 1.8631
+
+[✓] Average loss: 1.8528
+
+[✓] Average loss: 1.8430
+
+[✓] Average loss: 1.8332
+
+[✓] Average loss: 1.8239
+
+[✓] Average loss: 1.8138
+
+[✓] Average loss: 1.8044
+
+[✓] Average loss: 1.7952
+
+[✓] Average loss: 1.7864
+
+[✓] Average loss: 1.7771
+
+[✓] Average loss: 1.7681
+
+[✓] Average loss: 1.7591
+
+[✓] Average loss: 1.7501
+
+[✓] Average loss: 1.7418
+
+[✓] Average loss: 1.7332
+
+[✓] Average loss: 1.7249
+
+[✓] Average loss: 1.7165
+
+[✓] Average loss: 1.7082
+
+[✓] Average loss: 1.7002
+
+[✓] Average loss: 1.6919
+
+[✓] Average loss: 1.6840
+
+[✓] Average loss: 1.6764
+
+[✓] Average loss: 1.6682
+
+[✓] Average loss: 1.6606
+
+[✓] Average loss: 1.6523
+
+[✓] Average loss: 1.6445
+
+[✓] Average loss: 1.6367
+
+[✓] Average loss: 1.6294
+
+[✓] Average loss: 1.6221
+
+[✓] Average loss: 1.6144
+
+[✓] Average loss: 1.6072
+
+[✓] Average loss: 1.6000
+
+[✓] Average loss: 1.5930
+
+[✓] Average loss: 1.5857
+
+[✓] Average loss: 1.5788
+
+[✓] Average loss: 1.5721
+
+[✓] Average loss: 1.5652
+
+[✓] Average loss: 1.5577
+
+[✓] Average loss: 1.5508
+
+[✓] Average loss: 1.5443
+
+[✓] Average loss: 1.5375
+
+[✓] Average loss: 1.5309
+
+[✓] Average loss: 1.5239
+
+[✓] Average loss: 1.5177
+
+[✓] Average loss: 1.5108
+
+[✓] Average loss: 1.5046
+
+[✓] Average loss: 1.4982
+
+[✓] Average loss: 1.4916
+
+[✓] Average loss: 1.4853
+
+[✓] Average loss: 1.4790
+
+[✓] Average loss: 1.4730
+
+[✓] Average loss: 1.4666
+
+[✓] Average loss: 1.4609
+
+[✓] Average loss: 1.4548
+
+[✓] Average loss: 1.4491
+
+[✓] Average loss: 1.4431
+
+[✓] Average loss: 1.4372
+
+[✓] Average loss: 1.4309
+
+[✓] Average loss: 1.4247
+
+[✓] Average loss: 1.4192
+
+[✓] Average loss: 1.4134
+
+[✓] Average loss: 1.4074
+
+[✓] Average loss: 1.4020
+
+[✓] Average loss: 1.3960
+
+[✓] Average loss: 1.3902
+
+[✓] Average loss: 1.3847
+
+[✓] Average loss: 1.3792
+
+[✓] Average loss: 1.3736
+
+[✓] Average loss: 1.3677
+
+[✓] Average loss: 1.3631
+
+[✓] Average loss: 1.3577
+
+[✓] Average loss: 1.3522
+
+[✓] Average loss: 1.3467
+
+[✓] Average loss: 1.3416
+
+[✓] Average loss: 1.3365
+
+[✓] Average loss: 1.3306
+
+[✓] Average loss: 1.3258
+
+[✓] Average loss: 1.3204
+
+[✓] Average loss: 1.3153
+
+[✓] Average loss: 1.3106
+
+[✓] Average loss: 1.3059
+
+[✓] Average loss: 1.2998
+
+[✓] Average loss: 1.2950
+
+[✓] Average loss: 1.2902
+
+[✓] Average loss: 1.2850
+
+[✓] Average loss: 1.2802
+
+[✓] Average loss: 1.2751
+
+[✓] Average loss: 1.2705
+
+[✓] Average loss: 1.2657
+
+[✓] Average loss: 1.2604
+
+[✓] Average loss: 1.2561
+
+[✓] Average loss: 1.2510
+
+[✓] Average loss: 1.2461
+
+[✓] Average loss: 1.2414
+
+[✓] Average loss: 1.2367
+
+[✓] Average loss: 1.2322
+
+[✓] Average loss: 1.2277
+
+[✓] Average loss: 1.2233
+
+[✓] Average loss: 1.2186
+
+[✓] Average loss: 1.2140
+
+[✓] Average loss: 1.2093
+
+[✓] Average loss: 1.2048
+
+[✓] Average loss: 1.2004
+
+[✓] Average loss: 1.1960
+
+[✓] Average loss: 1.1917
+
+[✓] Average loss: 1.1874
+
+[✓] Average loss: 1.1828
+
+[✓] Average loss: 1.1786
+
+[✓] Average loss: 1.1742
+
+[✓] Average loss: 1.1698
+
+[✓] Average loss: 1.1660
+
+[✓] Average loss: 1.1614
+
+[✓] Average loss: 1.1572
+
+[✓] Average loss: 1.1532
+
+[✓] Average loss: 1.1492
+
+[✓] Average loss: 1.1448
+
+[✓] Average loss: 1.1416
+
+[✓] Average loss: 1.1372
+
+[✓] Average loss: 1.1330
+
+[✓] Average loss: 1.1287
+
+[✓] Average loss: 1.1245
+
+[✓] Average loss: 1.1207
+
+[✓] Average loss: 1.1171
+
+[✓] Average loss: 1.1130
+
+[✓] Average loss: 1.1095
+
+[✓] Average loss: 1.1052
+
+[✓] Average loss: 1.1012
+
+[✓] Average loss: 1.0980
+
+[✓] Average loss: 1.0940
+
+[✓] Average loss: 1.0903
+
+[✓] Average loss: 1.0865
+
+[✓] Average loss: 1.0833
+
+[✓] Average loss: 1.0797
+
+[✓] Average loss: 1.0753
+
+[✓] Average loss: 1.0720
+
+[✓] Average loss: 1.0682
+
+[✓] Average loss: 1.0644
+
+[✓] Average loss: 1.0613
+
+[✓] Average loss: 1.0581
+
+[✓] Average loss: 1.0543
+
+[✓] Average loss: 1.0501
+
+[✓] Average loss: 1.0475
+
+[✓] Average loss: 1.0436
+
+[✓] Average loss: 1.0403
+
+[✓] Average loss: 1.0365
+
+[✓] Average loss: 1.0332
+
+[✓] Average loss: 1.0304
+
+[✓] Average loss: 1.0267
+
+[✓] Average loss: 1.0233
+
+[✓] Average loss: 1.0193
+
+[✓] Average loss: 1.0168
+
+[✓] Average loss: 1.0135
+
+[✓] Average loss: 1.0102
+
+[✓] Average loss: 1.0072
+
+[✓] Average loss: 1.0036
+
+[✓] Average loss: 1.0005
+
+[✓] Average loss: 0.9974
+
+[✓] Average loss: 0.9944
+
+[✓] Average loss: 0.9908
+
+[✓] Average loss: 0.9882
+
+[✓] Average loss: 0.9840
+
+[✓] Average loss: 0.9822
+
+[✓] Average loss: 0.9787
+
+[✓] Average loss: 0.9756
+
+[✓] Average loss: 0.9730
+
+[✓] Average loss: 0.9701
+
+[✓] Average loss: 0.9662
+
+[✓] Average loss: 0.9641
+
+[✓] Average loss: 0.9608
+
+[✓] Average loss: 0.9579
+
+[✓] Average loss: 0.9549
+
+[✓] Average loss: 0.9520
+
+[✓] Average loss: 0.9490
+
+[✓] Average loss: 0.9467
+
+[✓] Average loss: 0.9434
+
+[✓] Average loss: 0.9403
+
+[✓] Average loss: 0.9376
+
+[✓] Average loss: 0.9361
+
+[✓] Average loss: 0.9325
+
+[✓] Average loss: 0.9289
+
+[✓] Average loss: 0.9263
+
+[✓] Average loss: 0.9237
+
+[✓] Average loss: 0.9216
+
+[✓] Average loss: 0.9184
+
+[✓] Average loss: 0.9160
+
+[✓] Average loss: 0.9136
+
+[✓] Average loss: 0.9099
+
+[✓] Average loss: 0.9078
+
+[✓] Average loss: 0.9048
+
+[✓] Average loss: 0.9027
+
+[✓] Average loss: 0.9001
+
+[✓] Average loss: 0.8975
+
+[✓] Average loss: 0.8949
+
+[✓] Average loss: 0.8925
+
+[✓] Average loss: 0.8901
+
+[✓] Average loss: 0.8870
+
+[✓] Average loss: 0.8850
+
+[✓] Average loss: 0.8822
+
+[✓] Average loss: 0.8797
+
+[✓] Average loss: 0.8776
+
+[✓] Average loss: 0.8750
+
+[✓] Average loss: 0.8731
+
+[✓] Average loss: 0.8696
+
+[✓] Average loss: 0.8678
+
+[✓] Average loss: 0.8657
+
+[✓] Average loss: 0.8634
+
+[✓] Average loss: 0.8607
+
+[✓] Average loss: 0.8584
+
+[✓] Average loss: 0.8558
+
+[✓] Average loss: 0.8534
+
+[✓] Average loss: 0.8512
+
+[✓] Average loss: 0.8491
+
+[✓] Average loss: 0.8468
+
+[✓] Average loss: 0.8446
+
+[✓] Average loss: 0.8425
+
+[✓] Average loss: 0.8400
+
+[✓] Average loss: 0.8379
+
+[✓] Average loss: 0.8356
+
+[✓] Average loss: 0.8337
+
+[✓] Average loss: 0.8314
+
+[✓] Average loss: 0.8290
+
+[✓] Average loss: 0.8263
+
+[✓] Average loss: 0.8248
+
+[✓] Average loss: 0.8227
+
+[✓] Average loss: 0.8208
+
+[✓] Average loss: 0.8182
+
+[✓] Average loss: 0.8160
+
+[✓] Average loss: 0.8135
+
+[✓] Average loss: 0.8119
+
+[✓] Average loss: 0.8097
+
+[✓] Average loss: 0.8075
+
+[✓] Average loss: 0.8060
+
+[✓] Average loss: 0.8040
+
+[✓] Average loss: 0.8007
+
+[✓] Average loss: 0.7995
+
+[✓] Average loss: 0.7979
+
+[✓] Average loss: 0.7955
+
+[✓] Average loss: 0.7931
+
+[✓] Average loss: 0.7918
+
+[✓] Average loss: 0.7894
+
+[✓] Average loss: 0.7877
+
+[✓] Average loss: 0.7858
+
+[✓] Average loss: 0.7835
+
+[✓] Average loss: 0.7820
+
+[✓] Average loss: 0.7795
+
+[✓] Average loss: 0.7777
+
+[✓] Average loss: 0.7764
+
+[✓] Average loss: 0.7742
+
+[✓] Average loss: 0.7721
+
+[✓] Average loss: 0.7701
+
+[✓] Average loss: 0.7692
+
+[✓] Average loss: 0.7669
+
+[✓] Average loss: 0.7646
+
+[✓] Average loss: 0.7631
+
+[✓] Average loss: 0.7612
+
+[✓] Average loss: 0.7594
+
+[✓] Average loss: 0.7574
+
+[✓] Average loss: 0.7556
+
+[✓] Average loss: 0.7538
+
+[✓] Average loss: 0.7520
+
+[✓] Average loss: 0.7506
+
+[✓] Average loss: 0.7486
+
+[✓] Average loss: 0.7471
+
+[✓] Average loss: 0.7452
+
+[✓] Average loss: 0.7433
+
+[✓] Average loss: 0.7418
+
+[✓] Average loss: 0.7401
+
+[✓] Average loss: 0.7389
+
+[✓] Average loss: 0.7369
+
+[✓] Average loss: 0.7355
+
+[✓] Average loss: 0.7333
+
+[✓] Average loss: 0.7321
+
+[✓] Average loss: 0.7302
+
+[✓] Average loss: 0.7285
+
+[✓] Average loss: 0.7268
+
+[✓] Average loss: 0.7258
+
+[✓] Average loss: 0.7233
+
+[✓] Average loss: 0.7218
+
+[✓] Average loss: 0.7198
+
+[✓] Average loss: 0.7185
+
+[✓] Average loss: 0.7167
+
+[✓] Average loss: 0.7155
+
+[✓] Average loss: 0.7140
+
+[✓] Average loss: 0.7124
+
+[✓] Average loss: 0.7108
+
+[✓] Average loss: 0.7094
+
+[✓] Average loss: 0.7082
+
+[✓] Average loss: 0.7061
+
+[✓] Average loss: 0.7046
+
+[✓] Average loss: 0.7036
+
+[✓] Average loss: 0.7021
+
+[✓] Average loss: 0.7001
+
+[✓] Average loss: 0.6992
+
+[✓] Average loss: 0.6973
+
+[✓] Average loss: 0.6959
+
+[✓] Average loss: 0.6949
+
+[✓] Average loss: 0.6928
+
+[✓] Average loss: 0.6920
+
+[✓] Average loss: 0.6904
