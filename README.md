@@ -1,4 +1,4 @@
-# SEENTENCE
+# HokusAI
 
 *Transforming Images into Captions with AI*
 
@@ -39,7 +39,7 @@
 
 ## 🧠 Overview
 
-**Seentence** is a transformer-based neural network created to extract features from images and, through a context behind it, generate a coherent caption based on the vocabulary, combining advanced deep learning techniques.
+**HokusAI** is a transformer-based neural network created to extract features from images and, through a context behind it, generate a coherent caption based on the vocabulary, combining advanced deep learning techniques.
 
 ### Why Sentence?
 
