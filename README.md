@@ -41,7 +41,7 @@
 
 **HokusAI** is a transformer-based neural network created to extract features from images and, through a context behind it, generate a coherent caption based on the vocabulary, combining advanced deep learning techniques.
 
-### Why Sentence?
+### Why HokusAI?
 
 - 🦾 **Powerful Architecture**: Combines Vision, Encoder and Decoder Tranformers for best results
 - 🎯 **End-to-End Workflow**: Supports training, inference, and model management with configurable hyperparameters.
@@ -72,17 +72,17 @@ If you don't know what is it, use first option!
 Without virtual environment:
 
 ```bash
-git clone https://github.com/ErickRad/Seentence.git
-cd Seentence
+git clone https://github.com/ErickRad/HokusAI.git
+cd HokusAI
 pip install -r requirements.txt
 
 ```
 With virtual environment:
 
 ```bash
-git clone https://github.com/ErickRad/Seentence.git
-python -m venv Sentence
-cd Seentence
+git clone https://github.com/ErickRad/HokusAI.git
+python -m venv HokusAI
+cd HokusAI
 source bin/activate
 pip install -r requirements.txt
 
