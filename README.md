@@ -1,5 +1,5 @@
 # HokusAI  
-![Test](https://github.com/ErickRad/HokusAI/blob/master/Screenshots/test.jpeg)
+![Test](https://github.com/ErickRad/HokusAI/blob/master/Screenshots/test.jpg)
 *Transforming Images into Captions with AI*
 
 ![Python](https://img.shields.io/badge/python-100%25-blue)
