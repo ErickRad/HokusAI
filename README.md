@@ -40,6 +40,7 @@
 ## 🧠 Overview
 
 **HokusAI** is a transformer-based neural network created to extract features from images and, through a context behind it, generate a coherent caption based on the vocabulary, combining advanced deep learning techniques.
+![Test](https://github.com/ErickRad/HokusAI/Screenshots/test.jpeg)
 
 ### Why HokusAI?
 
