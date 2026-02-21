@@ -1,5 +1,5 @@
-# HokusAI
-
+# HokusAI  
+![Test](https://github.com/ErickRad/HokusAI/blob/master/Screenshots/test.jpeg)
 *Transforming Images into Captions with AI*
 
 ![Python](https://img.shields.io/badge/python-100%25-blue)
@@ -39,8 +39,7 @@
 
 ## 🧠 Overview
 
-**HokusAI** is a transformer-based neural network created to extract features from images and, through a context behind it, generate a coherent caption based on the vocabulary, combining advanced deep learning techniques.
-![Test](https://github.com/ErickRad/HokusAI/blob/master/Screenshots/test.jpeg)
+**HokusAI** is a transformer-based neural network created to extract features from images and, through a context behind it, generate a coherent caption based on the vocabulary, combining advanced deep learning techniques.  
 
 ### Why HokusAI?
 
