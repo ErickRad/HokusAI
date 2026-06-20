@@ -16,7 +16,6 @@
 ![Pandas](https://img.shields.io/badge/-Pandas-150458)
 ![NumPy](https://img.shields.io/badge/-NumPy-013243)
 ![tqdm](https://img.shields.io/badge/-tqdm-yellow)
-
 ![Pillow](https://img.shields.io/badge/-Pillow-blue)
 
 ---
