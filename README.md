@@ -7,19 +7,6 @@
 
 ---
 
-### Built with the tools and technologies:
-
-![Python](https://img.shields.io/badge/-Python-3776AB?logo=python&logoColor=white)
-![PyTorch](https://img.shields.io/badge/-PyTorch-EE4C2C?logo=pytorch&logoColor=white)
-![CUDA](https://img.shields.io/badge/-CUDA-76B900?logo=nvidia&logoColor=white)
-![Matplotl ib](https://img.shields.io/badge/-Matplotlib-11557C)
-![Pandas](https://img.shields.io/badge/-Pandas-150458)
-![NumPy](https://img.shields.io/badge/-NumPy-013243)
-![tqdm](https://img.shields.io/badge/-tqdm-yellow)
-![Pillow](https://img.shields.io/badge/-Pillow-blue)
-
----
-
 ## 📚Table of Contents
 
 - [Overview](#overview)
