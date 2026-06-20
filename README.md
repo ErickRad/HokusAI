@@ -5,8 +5,6 @@
 ![Python](https://img.shields.io/badge/python-100%25-blue)
 ![Languages](https://img.shields.io/badge/languages-1-blue)
 
----
-
 ## 📚Table of Contents
 
 - [Overview](#overview)
